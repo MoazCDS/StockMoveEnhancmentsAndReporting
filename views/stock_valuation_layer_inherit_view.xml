@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_stock_valuation_layer_tree_inherit" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.tree.inherit.reporting</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="current_unit_cost"/>
+                <field name="current_total_cost"/>
+                <field name="current_unit_price"/>
+                <field name="current_total_sales"/>
+                <field name="onhand_at_move"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
