@@ -14,6 +14,7 @@ class StockMoveLineInherit(models.Model):
         ('consignment_out', 'Consignment Returns'),
         ('manufactured_fp', 'Manufactured Finished Product'),
         ('rm_to_mo', 'Raw Material to Manufacture'),
+        ('inventory_adjustment', 'Inventory Adjustment'),
         ('undefined', 'Undefined'),
     ], compute="_compute_move_type", store=True, string="Move Type")
 
@@ -64,8 +65,8 @@ class StockMoveLineInherit(models.Model):
             line.current_unit_cost = product.standard_price
             line.current_total_cost = product.standard_price * quantity
 
-            line.current_unit_price = product.lst_price
-            line.current_total_sales = product.lst_price * quantity
+            line.current_unit_price = line.move_id.sale_line_id.price_unit if line.move_id.sale_line_id else 0
+            line.current_total_sales = line.current_unit_price * quantity if line.move_id.sale_line_id else 0
 
             move_date = line.date or line.create_date
             line.onhand_at_move = product.with_context(to_date=move_date).qty_available
